@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# NOTE: edit this to point to proton you wish to launch.
+COMPAT_TOOL_ROOT="/home/${USER}/.steam/steam/compatibilitytools.d"
+PROTON_PATH="/home/${USER}/.steam/steam/steamapps/common/Proton - Experimental"
+# NOTE: edit this if the compatibility name is different.
+TOOL_NAME="x64dbg-compattool"
+TOOL_ROOT="${COMPAT_TOOL_ROOT}/${TOOL_NAME}"
+# TODO: read steam config to get global proton.
+
+# NOTE: edit these two to download a different version.
+# NOTE: delete "x96dbg" dir in compat folder if you change this.
+X96DBG_ZIP="snapshot_2026-04-20_19-04.zip"
+X96DBG_URL="https://github.com/x64dbg/x64dbg/releases/download/2026.04.20/${X96DBG_ZIP}"
+
+PROTON_BIN="${PROTON_PATH}/proton"
+X96DBG_BIN="Z:${TOOL_ROOT//\//\\}\\x96dbg\\release\\x64\\x64dbg.exe"
+
+declare -a LAUNCH_ARGS
+GAME_EXE=""
+
+for arg in "$@"; do
+	if [[ -z "$GAME_EXE" && "$arg" == *.exe && "$arg" != *legacycompat* ]]; then
+		GAME_EXE="$arg"
+		
+		LAUNCH_ARGS+=("$X96DBG_BIN")
+		LAUNCH_ARGS+=("Z:${GAME_EXE//\//\\}")
+
+		if [[ ! -d "x96dbg" ]]; then
+			curl "${X96DBG_URL}" --location > "${TOOL_ROOT}/${X96DBG_ZIP}"
+			python3 -m zipfile -e "${TOOL_ROOT}/${X96DBG_ZIP}" "${TOOL_ROOT}/x96dbg"
+		fi
+	else
+		LAUNCH_ARGS+=("$arg")
+	fi
+done
+
+exec "$PROTON_BIN" "${LAUNCH_ARGS[@]}"

@@ -1,0 +1,14 @@
+"compatibilitytools"
+{
+  "compat_tools"
+  {
+	"Proton-x96dbg"
+	{
+	  "install_path" "."
+	  "display_name" "x96dbg"
+
+	  "from_oslist"  "windows"
+	  "to_oslist"    "linux"
+	}
+  }
+}

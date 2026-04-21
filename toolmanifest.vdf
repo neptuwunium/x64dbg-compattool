@@ -1,0 +1,8 @@
+"manifest"
+{
+  "version" "2"
+  "commandline" "/boot-x96dbg %verb%"
+  "require_tool_appid" "1628350" // copy this from the proton compat tool
+  "use_sessions" "1"
+  "compatmanager_layer_name" "proton"
+}
