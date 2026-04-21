@@ -26,7 +26,7 @@ for arg in "$@"; do
 		LAUNCH_ARGS+=("$X96DBG_BIN")
 		LAUNCH_ARGS+=("Z:${GAME_EXE//\//\\}")
 
-		if [[ ! -d "x96dbg" ]]; then
+		if [[ ! -d "${TOOL_ROOT}/x96dbg" ]]; then
 			curl "${X96DBG_URL}" --location > "${TOOL_ROOT}/${X96DBG_ZIP}"
 			python3 -m zipfile -e "${TOOL_ROOT}/${X96DBG_ZIP}" "${TOOL_ROOT}/x96dbg"
 		fi
